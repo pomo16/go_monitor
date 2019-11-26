@@ -1,4 +1,4 @@
-package hanlder
+package handler
 
 import (
 	"github.com/gin-gonic/gin"
@@ -6,7 +6,7 @@ import (
 )
 
 func Ping(c *gin.Context) {
-	logrus.Warn("ping")
+	logrus.Info("ping")
 	c.JSON(200, gin.H{
 		"message": "pong",
 	})

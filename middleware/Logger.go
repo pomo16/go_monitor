@@ -1,4 +1,5 @@
 package middleware
+
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -11,8 +12,8 @@ import (
 )
 //日志记录到文件
 func CustomLogger() gin.HandlerFunc {
-	logFilePath := "."
-	logFileName := "test.log"
+	logFilePath := "output/log"
+	logFileName := "log"
 	// 日志文件
 	fileName := path.Join(logFilePath, logFileName)
 	// 写入文件
@@ -20,7 +21,7 @@ func CustomLogger() gin.HandlerFunc {
 	if err != nil {
 		fmt.Println("err", err)
 	}
-	// 实例化
+
 	logger := logrus.New()
 	// 设置输出
 	logger.Out = src
@@ -29,7 +30,7 @@ func CustomLogger() gin.HandlerFunc {
 	// 设置 rotatelogs
 	logWriter, err := rotatelogs.New(
 		// 分割后的文件名称
-		fileName + ".%Y%m%d.log",
+		fileName + "-%Y%m%d.log",
 		// 生成软链，指向最新日志文件
 		rotatelogs.WithLinkName(fileName),
 		// 设置最大保存时间(7天)
