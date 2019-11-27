@@ -6,18 +6,20 @@ import (
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/rifflock/lfshook"
 	"github.com/sirupsen/logrus"
+	"gowatcher/go_monitor/consts"
 	"os"
 	"path"
+	"path/filepath"
 	"time"
 )
+
 //日志记录到文件
 func CustomLogger() gin.HandlerFunc {
-	logFilePath := "output/log"
-	logFileName := "log"
+	logFilePath, _ := filepath.Abs(consts.LogFilePath)
+	logFileName := consts.LogFileName
 	// 日志文件
 	fileName := path.Join(logFilePath, logFileName)
-	// 写入文件
-	src, err := os.OpenFile(fileName, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
+	src, err := os.OpenFile(fileName, os.O_CREATE|os.O_APPEND|os.O_WRONLY, os.ModeAppend)
 	if err != nil {
 		fmt.Println("err", err)
 	}
@@ -30,7 +32,7 @@ func CustomLogger() gin.HandlerFunc {
 	// 设置 rotatelogs
 	logWriter, err := rotatelogs.New(
 		// 分割后的文件名称
-		fileName + "-%Y%m%d.log",
+		fileName+"-%Y%m%d.log",
 		// 生成软链，指向最新日志文件
 		rotatelogs.WithLinkName(fileName),
 		// 设置最大保存时间(7天)
@@ -47,7 +49,7 @@ func CustomLogger() gin.HandlerFunc {
 		logrus.PanicLevel: logWriter,
 	}
 	lfHook := lfshook.NewHook(writeMap, &logrus.JSONFormatter{
-		TimestampFormat:"2006-01-02 15:04:05",
+		TimestampFormat: "2006-01-02 15:04:05",
 	})
 	// 新增 Hook
 	logger.AddHook(lfHook)
@@ -70,11 +72,11 @@ func CustomLogger() gin.HandlerFunc {
 		clientIP := c.ClientIP()
 		// 日志格式
 		logger.WithFields(logrus.Fields{
-			"status_code"  : statusCode,
-			"latency_time" : latencyTime,
-			"client_ip"    : clientIP,
-			"req_method"   : reqMethod,
-			"req_uri"      : reqUri,
+			"status_code":  statusCode,
+			"latency_time": latencyTime,
+			"client_ip":    clientIP,
+			"req_method":   reqMethod,
+			"req_uri":      reqUri,
 		}).Info()
 	}
 }

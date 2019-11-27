@@ -1,7 +1,6 @@
 RUN_NAME="go_monitor"
 
 run:
-	sh build.sh
 	./output/${RUN_NAME}
 
 build:

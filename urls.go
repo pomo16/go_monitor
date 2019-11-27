@@ -3,11 +3,18 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"gowatcher/go_monitor/handler"
+	"gowatcher/go_monitor/handler/crawl"
 	"gowatcher/go_monitor/middleware"
 )
 
-var urlMaps = map[string]gin.HandlerFunc {
+var testUrls = map[string]gin.HandlerFunc{
 	"/ping": handler.Ping,
+}
+
+var platformUrls = map[string]gin.HandlerFunc{
+	"/crawl/add":    crawl.AddTask,
+	"/crawl/get":    crawl.GetTask,
+	"/crawl/update": crawl.UpdateTask,
 }
 
 func InstanceRoutine() *gin.Engine {
@@ -15,9 +22,18 @@ func InstanceRoutine() *gin.Engine {
 
 	r := gin.New()
 	r.Use(middleware.CustomLogger())
-	for url, handler := range urlMaps {
-		r.GET(url, handler)
-		r.POST(url, handler)
+
+	testGroup := r.Group("/test")
+	for url, handler := range testUrls {
+		testGroup.GET(url, handler)
+		testGroup.POST(url, handler)
 	}
+
+	monitorGroup := r.Group("/monitor")
+	for url, handler := range platformUrls {
+		monitorGroup.GET(url, handler)
+		monitorGroup.POST(url, handler)
+	}
+
 	return r
 }
