@@ -2,6 +2,7 @@ package database
 
 import (
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"gopkg.in/yaml.v2"
 	"gowatcher/go_monitor/consts"
 	"gowatcher/go_monitor/exceptions"
@@ -11,7 +12,7 @@ import (
 )
 
 var (
-	DataBase *gorm.DB
+	database *gorm.DB
 )
 
 func InitDB() {
@@ -23,7 +24,7 @@ func InitDB() {
 	db, err := gorm.Open("mysql", dbLink)
 	if err == nil {
 		db.SingularTable(true)
-		DataBase = db
+		database = db
 	} else {
 		panic(err)
 	}

@@ -14,6 +14,8 @@ var (
 
 	ErrProcessPanic  = errors.New("processor panic")
 	ErrProcessFailed = errors.New("processor failed")
+
+	ErrDBHandle = errors.New("db handle failed")
 )
 
 //返回给前端的业务错误码err_no
