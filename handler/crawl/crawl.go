@@ -5,10 +5,10 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func AddTask(c *gin.Context) {
+func TaskList(c *gin.Context) {
 	logrus.Info("ping")
 	c.JSON(200, gin.H{
-		"message": "pong1",
+		"message": "pong2",
 	})
 }
 

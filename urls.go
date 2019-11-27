@@ -13,6 +13,7 @@ var testUrls = map[string]gin.HandlerFunc{
 
 var platformUrls = map[string]gin.HandlerFunc{
 	"/crawl/add":    crawl.AddTask,
+	"/crawl/list":   crawl.TaskList,
 	"/crawl/get":    crawl.GetTask,
 	"/crawl/update": crawl.UpdateTask,
 }

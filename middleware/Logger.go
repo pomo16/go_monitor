@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-//日志记录到文件
+//CustomLogger 日志中间件
 func CustomLogger() gin.HandlerFunc {
 	logFilePath, _ := filepath.Abs(consts.LogFilePath)
 	logFileName := consts.LogFileName
