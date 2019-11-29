@@ -2,6 +2,7 @@ package crawl
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 	"gowatcher/go_monitor/consts"
 	"gowatcher/go_monitor/exceptions"
 	"gowatcher/go_monitor/model"
@@ -13,25 +14,38 @@ type TaskLoader struct{}
 
 //Process 加载爬虫任务
 func (loader *TaskLoader) Process(ctx *gin.Context, runCtx model.IContext) exceptions.ErrProcessor {
-	inputParameter := runCtx.GetInputParameter()
+	listCtx, ok := runCtx.(model.ITaskListContext)
+	if !ok {
+		logrus.Warn(ctx, "TaskList loader listCtx error")
+		return exceptions.ErrTypeAssert
+	}
 
+	inputParameter := runCtx.GetInputParameter()
+	var taskList []*model.CrawlTask
+	var err error
 	switch inputParameter.QueryType {
 	case consts.IdType:
 		if inputParameter.TaskID == 0 {
 			return exceptions.ErrRequestParams
 		} else {
-			if err := database.GetTask(ctx, inputParameter.TaskID); err == nil {
-				return nil
-			}
+			taskList, err = database.GetTaskByID(ctx, inputParameter.TaskID)
 		}
 	case consts.ListType:
-		if err := database.ListTask(ctx); err == nil {
-			return nil
-		}
+		taskList, err = database.GetTaskList(ctx)
 	default:
 		return exceptions.ErrRequestParams
 	}
 
+	if taskList != nil {
+		listCtx.SetTaskList(taskList)
+		return nil
+	}
+
+	if err == nil && len(taskList) == 0 {
+		return exceptions.ErrResultEmpty
+	}
+
+	logrus.Error("TaskList loader return err: %v", err)
 	return exceptions.ErrProcessFailed
 }
 

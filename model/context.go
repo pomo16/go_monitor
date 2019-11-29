@@ -11,20 +11,38 @@ type IContext interface {
 	GetInputParameter() *InputParameter
 }
 
-//AddTaskContext 爬虫任务添加上下文
-type AddTaskContext struct {
+//TaskConfContext 爬虫任务配置上下文
+type TaskConfContext struct {
 	BaseContext
-	crawlTask *CrawlTask
+	taskConf *CrawlTask
 }
 
-//IAddTaskContext 爬虫任务添加接口
-type IAddTaskContext interface {
+//ITaskConfContext 爬虫任务配置接口
+type ITaskConfContext interface {
 	IContext
-	SetAddTask(crawlTask *CrawlTask)
-	GetAddTask() *CrawlTask
+	SetTaskConf(taskConf *CrawlTask)
+	GetTaskConf() *CrawlTask
 }
 
-//NewAddTaskContext context构造函数
-func NewAddTaskContext() *AddTaskContext {
-	return &AddTaskContext{}
+//NewTaskConfContext context构造函数
+func NewTaskConfContext() *TaskConfContext {
+	return &TaskConfContext{}
+}
+
+//TaskListContext 爬虫任务获取上下文
+type TaskListContext struct {
+	BaseContext
+	taskList []*CrawlTask
+}
+
+//ITaskListContext 爬虫任务获取接口
+type ITaskListContext interface {
+	IContext
+	SetTaskList(taskList []*CrawlTask)
+	GetTaskList() []*CrawlTask
+}
+
+//NewTaskListContext context构造函数
+func NewTaskListContext() *TaskListContext {
+	return &TaskListContext{}
 }

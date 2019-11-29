@@ -10,7 +10,7 @@ import (
 )
 
 func AddTask(c *gin.Context) {
-	context := model.NewAddTaskContext()
+	context := model.NewTaskConfContext()
 
 	preContextLoader := &processor.PreContextLoader{}
 	preContextCode := processor.LoaderCommon(c, context, preContextLoader)
@@ -40,7 +40,7 @@ func AddTask(c *gin.Context) {
 
 	c.JSON(200, gin.H{
 		"message":  consts.MsgSuccess,
-		"data":     "",
+		"data":     map[string]interface{}{},
 		"err_no":   0,
 		"err_tips": "成功",
 	})

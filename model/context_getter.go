@@ -13,15 +13,28 @@ func (infoCtx *BaseContext) GetInputParameter() *InputParameter {
 	return &InputParameter{}
 }
 
-//SetAddTask 设置爬虫任务添加
-func (infoCtx *AddTaskContext) SetAddTask(crawlTask *CrawlTask) {
-	infoCtx.crawlTask = crawlTask
+//SetTaskConf 设置爬虫任务配置参数
+func (infoCtx *TaskConfContext) SetTaskConf(taskConf *CrawlTask) {
+	infoCtx.taskConf = taskConf
+}
+
+//GetTaskConf 获取爬虫任务配置参数
+func (infoCtx *TaskConfContext) GetTaskConf() *CrawlTask {
+	if infoCtx.taskConf != nil {
+		return infoCtx.taskConf
+	}
+	return &CrawlTask{}
+}
+
+//SetGetTask 设置爬虫任务获取参数
+func (infoCtx *TaskListContext) SetTaskList(taskList []*CrawlTask) {
+	infoCtx.taskList = taskList
 }
 
 //GetAddTask 获取爬虫任务添加
-func (infoCtx *AddTaskContext) GetAddTask() *CrawlTask {
-	if infoCtx.crawlTask != nil {
-		return infoCtx.crawlTask
+func (infoCtx *TaskListContext) GetTaskList() []*CrawlTask {
+	if infoCtx.taskList != nil {
+		return infoCtx.taskList
 	}
-	return &CrawlTask{}
+	return []*CrawlTask{}
 }

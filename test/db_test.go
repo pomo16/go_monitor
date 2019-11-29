@@ -9,7 +9,7 @@ import (
 
 func TestDB(t *testing.T) {
 	database.InitDB()
-	res, err := database.ListTask(&gin.Context{})
+	res, err := database.GetTaskList(&gin.Context{})
 	if err != nil {
 		fmt.Println(err)
 	}
