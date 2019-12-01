@@ -8,5 +8,9 @@ build:
 	chmod +x build.sh
 	sh build.sh
 
+relog:
+	rm -rf output/monitor_log
+	mkdir output/monitor_log
+
 clean:
 	rm -rf output

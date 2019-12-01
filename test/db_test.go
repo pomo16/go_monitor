@@ -37,7 +37,7 @@ func TestInsertTask(t *testing.T) {
 
 func TestGetTaskByID(t *testing.T) {
 	database.InitDB()
-	res, err := database.GetTaskByID(context.Background(), 1)
+	res, err := database.GetTaskByID(context.Background(), 8)
 	if err != nil {
 		fmt.Println(err)
 	}

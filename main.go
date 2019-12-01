@@ -1,7 +1,9 @@
 package main
 
-func Init() {
+import "gowatcher/go_monitor/service/database"
 
+func Init() {
+	database.InitDB()
 }
 
 func main() {

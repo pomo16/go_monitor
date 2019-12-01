@@ -36,12 +36,12 @@ func (loader *TaskLoader) Process(ctx *gin.Context, runCtx model.IContext) excep
 		return exceptions.ErrRequestParams
 	}
 
-	if taskList != nil {
+	if taskList != nil && len(taskList) != 0 {
 		listCtx.SetTaskList(taskList)
 		return nil
 	}
 
-	if err == nil && len(taskList) == 0 {
+	if len(taskList) == 0 {
 		return exceptions.ErrResultEmpty
 	}
 

@@ -9,11 +9,12 @@ import (
 func ParseInputParameter(ctx *gin.Context) *model.InputParameter {
 	parameter := &model.InputParameter{
 		CrawlParams: model.CrawlParams{
-			TaskID:    utils.GetParamInt32(ctx, "task_id", 0),
-			AppID:     utils.GetParamString(ctx, "app_id", ""),
-			AppName:   utils.GetParamString(ctx, "app_name", ""),
-			Status:    utils.GetParamInt16(ctx, "status", 0),
-			QueryType: utils.GetParamInt16(ctx, "type", 0),
+			TaskID:     utils.GetParamInt32(ctx, "task_id", 0),
+			AppID:      utils.GetParamString(ctx, "app_id", ""),
+			AppName:    utils.GetParamString(ctx, "app_name", ""),
+			Status:     utils.GetParamInt16(ctx, "status", 0),
+			QueryType:  utils.GetParamInt16(ctx, "q_type", 0),
+			ConfigType: utils.GetParamInt16(ctx, "c_type", 0),
 		},
 	}
 

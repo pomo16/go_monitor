@@ -40,8 +40,38 @@ func TaskList(c *gin.Context) {
 
 	c.JSON(200, gin.H{
 		"message":  consts.MsgSuccess,
-		"data":     map[string]interface{}{},
+		"data":     packFeedbackList(c, context),
 		"err_no":   0,
 		"err_tips": "成功",
 	})
+}
+
+func packFeedbackList(c *gin.Context, context model.ITaskListContext) map[string]interface{} {
+	taskList := context.GetTaskList()
+	inputParameter := context.GetInputParameter()
+	listMap := make([]map[string]interface{}, len(taskList))
+	if inputParameter.QueryType == consts.IdType {
+		listMap = append(listMap, map[string]interface{}{
+			"task_id":     taskList[0].ID,
+			"app_id":      taskList[0].AppID,
+			"app_name":    taskList[0].AppName,
+			"status":      taskList[0].Status,
+			"create_time": taskList[0].CreateTime,
+			"modify_time": taskList[0].ModifyTime,
+		})
+	} else if inputParameter.QueryType == consts.ListType {
+		for key, val := range taskList {
+			listMap[key] = map[string]interface{}{
+				"task_id":  val.ID,
+				"app_name": val.AppName,
+				"status":   val.Status,
+			}
+		}
+	}
+
+	result := map[string]interface{}{
+		"task_list": listMap,
+	}
+
+	return result
 }
