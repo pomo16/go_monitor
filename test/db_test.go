@@ -1,20 +1,60 @@
 package test
 
 import (
+	"context"
 	"fmt"
-	"github.com/gin-gonic/gin"
+	"gowatcher/go_monitor/model"
 	"gowatcher/go_monitor/service/database"
 	"testing"
 )
 
 func TestDB(t *testing.T) {
 	database.InitDB()
-	res, err := database.GetTaskList(&gin.Context{})
+	res, err := database.GetTaskList(context.Background())
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	for _, v := range res {
 		fmt.Printf("%+v\n", v)
+	}
+}
+
+func TestInsertTask(t *testing.T) {
+	database.InitDB()
+	task := &model.CrawlTask{
+		AppID:      "458318329",
+		AppName:    "腾讯视频",
+		Status:     1,
+		CreateTime: "2019-11-26 10:50:55",
+		ModifyTime: "2019-11-26 10:50:55",
+	}
+	err := database.InsertTask(context.Background(), task)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
+func TestGetTaskByID(t *testing.T) {
+	database.InitDB()
+	res, err := database.GetTaskByID(context.Background(), 1)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	for _, v := range res {
+		fmt.Printf("%+v\n", v)
+	}
+}
+
+func TestUpdateTask(t *testing.T) {
+	database.InitDB()
+	task := &model.CrawlTask{
+		ID:     7,
+		Status: 2,
+	}
+	err := database.UpdateTask(context.Background(), task)
+	if err != nil {
+		fmt.Println(err)
 	}
 }

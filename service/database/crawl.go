@@ -1,18 +1,23 @@
 package database
 
 import (
-	"github.com/gin-gonic/gin"
+	"context"
 	"github.com/sirupsen/logrus"
 	"gowatcher/go_monitor/exceptions"
 	"gowatcher/go_monitor/model"
 )
 
-func AddTask(ctx *gin.Context, params *model.CrawlParams) error {
-	//todo: add sql
+//InsertTask 添加爬虫任务
+func InsertTask(ctx context.Context, task *model.CrawlTask) error {
+	if err := database.Table("gowatcher.crawl_task_table").Debug().Create(task).Error; err != nil {
+		logrus.Warnf("insert task error, err: %v", err.Error())
+		return exceptions.ErrDBHandle
+	}
 	return nil
 }
 
-func GetTaskList(ctx *gin.Context) ([]*model.CrawlTask, error) {
+//GetTaskList 获取爬虫任务列表
+func GetTaskList(ctx context.Context) ([]*model.CrawlTask, error) {
 	rows, err := database.Table("gowatcher.crawl_task_table").Debug().
 		Select("id, app_name, status").Order("id").Rows()
 
@@ -34,22 +39,15 @@ func GetTaskList(ctx *gin.Context) ([]*model.CrawlTask, error) {
 
 	res := []*model.CrawlTask{}
 	for rows.Next() {
-		var tmp model.TaskRow
+		var tmp model.CrawlTask
 		database.ScanRows(rows, &tmp)
-		task := &model.CrawlTask{
-			TaskID:     tmp.ID,
-			AppID:      tmp.AppID,
-			AppName:    tmp.AppName,
-			Status:     tmp.Status,
-			CreateTime: tmp.CreateTime,
-			ModifyTime: tmp.ModifyTime,
-		}
-		res = append(res, task)
+		res = append(res, &tmp)
 	}
 	return res, nil
 }
 
-func GetTaskByID(ctx *gin.Context, taskID int32) ([]*model.CrawlTask, error) {
+//GetTaskByID 通过ID获取爬虫任务详情
+func GetTaskByID(ctx context.Context, taskID int32) ([]*model.CrawlTask, error) {
 	rows, err := database.Table("gowatcher.crawl_task_table").Debug().
 		Select("id, app_name, app_id, status, create_time, modify_time").
 		Where("id = ?", taskID).Rows()
@@ -72,22 +70,21 @@ func GetTaskByID(ctx *gin.Context, taskID int32) ([]*model.CrawlTask, error) {
 
 	res := []*model.CrawlTask{}
 	for rows.Next() {
-		var tmp model.TaskRow
+		var tmp model.CrawlTask
 		database.ScanRows(rows, &tmp)
-		task := &model.CrawlTask{
-			TaskID:     tmp.ID,
-			AppID:      tmp.AppID,
-			AppName:    tmp.AppName,
-			Status:     tmp.Status,
-			CreateTime: tmp.CreateTime,
-			ModifyTime: tmp.ModifyTime,
-		}
-		res = append(res, task)
+		res = append(res, &tmp)
 	}
 	return res, nil
 }
 
-func UpdateTask(ctx *gin.Context, params *model.CrawlParams) error {
-	//todo: add sql
+//UpdateTask 更新爬虫任务状态
+func UpdateTask(ctx context.Context, task *model.CrawlTask) error {
+	err := database.Table("gowatcher.crawl_task_table").Debug().Where("id = ?", task.ID).
+		UpdateColumns(model.CrawlTask{Status: task.Status, ModifyTime: task.ModifyTime}).Error
+
+	if err != nil {
+		logrus.Errorf("update task error, err: %v", err.Error())
+		return exceptions.ErrDBHandle
+	}
 	return nil
 }

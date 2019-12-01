@@ -8,14 +8,14 @@ type ErrProcessor error
 //用错误类型标识异常种类
 var (
 	ErrConfigRead = errors.New("read config error")
-	ErrDBHandle = errors.New("db handle failed")
+	ErrDBHandle   = errors.New("db handle failed")
 
 	ErrResultEmpty   = errors.New("result empty")
 	ErrRequestParams = errors.New("illegal request parameters")
 
 	ErrProcessPanic  = errors.New("processor panic")
 	ErrProcessFailed = errors.New("processor failed")
-	ErrTypeAssert = errors.New("type assert error")
+	ErrTypeAssert    = errors.New("type assert error")
 )
 
 //返回给前端的业务错误码err_no

@@ -21,8 +21,19 @@ const (
 	ListType = 2 //列表形式查询所有
 )
 
+//修改方式
+const (
+	AddType    = 1 //添加模式
+	UpdateType = 2 //更新模式
+)
+
 //消息响应
 const (
 	MsgSuccess = "success"
 	MsgError   = "error"
+)
+
+//字符串时间类型
+const (
+	SQLTFormat = "2006-01-02 15:04:05" //SQL标准时间字符串格式
 )

@@ -40,7 +40,7 @@ func TaskList(c *gin.Context) {
 
 	c.JSON(200, gin.H{
 		"message":  consts.MsgSuccess,
-		"data":     "",
+		"data":     map[string]interface{}{},
 		"err_no":   0,
 		"err_tips": "成功",
 	})

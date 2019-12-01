@@ -9,7 +9,7 @@ import (
 	"gowatcher/go_monitor/processor/crawl"
 )
 
-func AddTask(c *gin.Context) {
+func TaskConfig(c *gin.Context) {
 	context := model.NewTaskConfContext()
 
 	preContextLoader := &processor.PreContextLoader{}
@@ -25,10 +25,10 @@ func AddTask(c *gin.Context) {
 		return
 	}
 
-	addTaskContextLoader := &crawl.TaskInputter{}
-	addTaskContextCode := processor.LoaderCommon(c, context, addTaskContextLoader)
-	if addTaskContextCode != nil {
-		errNo, errTips := exceptions.ErrConvert(addTaskContextCode)
+	taskConfContextLoader := &crawl.TaskSetter{}
+	taskConfContextCode := processor.LoaderCommon(c, context, taskConfContextLoader)
+	if taskConfContextCode != nil {
+		errNo, errTips := exceptions.ErrConvert(taskConfContextCode)
 		c.JSON(200, gin.H{
 			"message":  consts.MsgError,
 			"data":     map[string]interface{}{},

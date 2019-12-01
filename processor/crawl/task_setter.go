@@ -6,26 +6,42 @@ import (
 	"gowatcher/go_monitor/exceptions"
 	"gowatcher/go_monitor/model"
 	"gowatcher/go_monitor/service/database"
+	"time"
 )
 
-//TaskSetter 爬虫任务更新器
+//TaskSetter 爬虫任务配置器
 type TaskSetter struct{}
 
-//Process 更新爬虫任务
+//Process 配置爬虫任务
 func (setter *TaskSetter) Process(ctx *gin.Context, runCtx model.IContext) exceptions.ErrProcessor {
 	inputParameter := runCtx.GetInputParameter()
+	if inputParameter.TaskID == 0 {
+		return exceptions.ErrRequestParams
+	}
 	if inputParameter.Status < consts.Normal || inputParameter.Status > consts.Unused {
 		return exceptions.ErrRequestParams
 	}
 
-	params := &model.CrawlParams{
-		AppID:   inputParameter.AppID,
-		AppName: inputParameter.AppName,
-		Status:  inputParameter.Status,
+	params := &model.CrawlTask{
+		ID:         inputParameter.TaskID,
+		AppID:      inputParameter.AppID,
+		AppName:    inputParameter.AppName,
+		Status:     inputParameter.Status,
+		CreateTime: time.Now().Format(consts.SQLTFormat),
+		ModifyTime: time.Now().Format(consts.SQLTFormat),
 	}
 
-	if err := database.UpdateTask(ctx, params); err == nil {
-		return nil
+	switch inputParameter.ConfigType {
+	case consts.AddType:
+		if err := database.InsertTask(ctx, params); err == nil {
+			return nil
+		}
+	case consts.UpdateType:
+		if err := database.UpdateTask(ctx, params); err == nil {
+			return nil
+		}
+	default:
+		return exceptions.ErrRequestParams
 	}
 
 	return exceptions.ErrProcessFailed
