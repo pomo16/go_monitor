@@ -2,7 +2,7 @@ package consts
 
 //log文件相关
 const (
-	LogFilePath = "output/monitor_log"
+	LogFilePath = "output/go_monitor_log"
 	LogFileName = "monitor"
 )
 

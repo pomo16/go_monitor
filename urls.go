@@ -20,6 +20,7 @@ func InstanceRoutine() *gin.Engine {
 	gin.DisableConsoleColor()
 
 	r := gin.New()
+	r.Use(gin.Recovery())
 	r.Use(middleware.CustomLogger())
 
 	testGroup := r.Group("/test")
