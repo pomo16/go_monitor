@@ -8,6 +8,10 @@ import (
 
 func ParseInputParameter(ctx *gin.Context) *model.InputParameter {
 	parameter := &model.InputParameter{
+		LoginParams: model.LoginParams{
+			UserName: utils.GetParamString(ctx, "username", ""),
+			Password: utils.GetParamString(ctx, "password", ""),
+		},
 		CrawlParams: model.CrawlParams{
 			TaskID:     utils.GetParamInt32(ctx, "task_id", 0),
 			AppID:      utils.GetParamString(ctx, "app_id", ""),

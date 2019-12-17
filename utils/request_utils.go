@@ -30,3 +30,24 @@ func GetParamInt16(ctx *gin.Context, param string, defalt int16) int16 {
 	}
 	return int16(rvl)
 }
+
+//PackGinResult 打包返回结果
+func PackGinResult(code int, msg string) gin.H {
+	return gin.H{
+		"status_code": code,
+		"msg":         msg,
+	}
+}
+
+func GetHeader(ctx *gin.Context, param string, defaultValue string) string {
+	value := ctx.Request.Header.Get(param)
+	if value == "" {
+		return defaultValue
+	}
+	return value
+}
+
+func SetHeader(ctx *gin.Context, param string, val string) {
+	header := ctx.Writer.Header()
+	header[param] = []string{val}
+}

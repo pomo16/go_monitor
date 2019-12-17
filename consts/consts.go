@@ -1,5 +1,7 @@
 package consts
 
+import "time"
+
 //log文件相关
 const (
 	LogFilePath = "output/go_monitor_log"
@@ -36,4 +38,15 @@ const (
 //字符串时间类型
 const (
 	SQLTFormat = "2006-01-02 15:04:05" //SQL标准时间字符串格式
+)
+
+//Token
+const (
+	TokenExpired = 15 * time.Minute
+	Secret       = "sa9eu89pum94"
+)
+
+//Redis
+const (
+	RedisTokenPrefix = "monitor:tk:"
 )

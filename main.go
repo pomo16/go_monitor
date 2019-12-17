@@ -1,9 +1,13 @@
 package main
 
-import "gowatcher/go_monitor/service/database"
+import (
+	"gowatcher/go_monitor/service/database"
+	"gowatcher/go_monitor/service/redis"
+)
 
 func Init() {
 	database.InitDB()
+	redis.InitRedis()
 }
 
 func main() {
