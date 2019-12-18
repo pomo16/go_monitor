@@ -19,7 +19,7 @@ func Login(c *gin.Context) {
 
 	if parameter.UserName == "" || parameter.Password == "" {
 		errCode := exceptions.ErrRequestParams
-		logrus.Error("user %v login error: %v\n", parameter.UserName, errCode)
+		logrus.Errorf("user %v login error: %v\n", parameter.UserName, errCode)
 		errNo, errTips := exceptions.ErrConvert(errCode)
 		c.JSON(http.StatusOK, gin.H{
 			"message":  consts.MsgError,
@@ -27,6 +27,7 @@ func Login(c *gin.Context) {
 			"err_no":   errNo,
 			"err_tips": errTips,
 		})
+		return
 	}
 
 	//TODO 鉴权逻辑
@@ -45,7 +46,7 @@ func Login(c *gin.Context) {
 		})
 	} else {
 		errCode := exceptions.ErrLogin
-		logrus.Error("user %v login error: %v\n", parameter.UserName, errCode)
+		logrus.Errorf("user %v login error: %v\n", parameter.UserName, errCode)
 		errNo, errTips := exceptions.ErrConvert(errCode)
 		c.JSON(http.StatusOK, gin.H{
 			"message":  consts.MsgError,
@@ -64,19 +65,16 @@ func generateToken(c *gin.Context, params *model.LoginParams) {
 	claims := utils.CustomClaims{
 		params.UserName,
 		jwtgo.StandardClaims{
-			NotBefore: time.Now().Unix() - 1000, // 签名生效时间
-			ExpiresAt: time.Now().Unix() + 900,  // 过期时间15分钟
-			Issuer:    "pomo",                   //签名的发行者
+			NotBefore: time.Now().Unix() - 1000,                   // 签名生效时间
+			ExpiresAt: time.Now().Add(consts.TokenExpired).Unix(), // 过期时间15分钟
+			Issuer:    "pomo",                                     //签名的发行者
 		},
 	}
 
 	token, err := j.CreateToken(claims)
 
 	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"status": -1,
-			"msg":    err.Error(),
-		})
+		c.JSON(http.StatusUnauthorized, utils.PackGinResult(http.StatusUnauthorized, "create token error"))
 		return
 	}
 

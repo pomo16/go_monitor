@@ -17,17 +17,12 @@ func CheckLogin() gin.HandlerFunc {
 		}
 
 		jwt := utils.NewJWT()
-		claims, err := jwt.ParseToken(token)
-		if err != nil {
-			c.JSON(http.StatusUnauthorized, utils.PackGinResult(http.StatusUnauthorized, "token error"))
-			c.Abort()
-			return
-		}
+		claims, _ := jwt.ParseToken(token)
 
 		//后面接口需要拿用户信息,todo:完善id机制
 		c.Set("user_id", claims.UserName)
 
-		isPass, err := redis.QueryToken(c)
+		isPass, _ := redis.QueryToken(c, token)
 		if !isPass {
 			c.JSON(http.StatusUnauthorized, utils.PackGinResult(http.StatusUnauthorized, "token error"))
 			c.Abort()

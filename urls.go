@@ -15,6 +15,7 @@ var outlookUrls = map[string]gin.HandlerFunc{
 
 var testUrls = map[string]gin.HandlerFunc{
 	"/ping": handler.Ping,
+	"/retk": user.Refresh,
 }
 
 var platformUrls = map[string]gin.HandlerFunc{

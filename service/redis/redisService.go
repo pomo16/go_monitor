@@ -25,16 +25,16 @@ func SetToken(c *gin.Context, token string) error {
 	return nil
 }
 
-func QueryToken(c *gin.Context) (bool, error) {
+func QueryToken(c *gin.Context, token string) (bool, error) {
 	userID, ok := c.Get("user_id")
 	if !ok {
 		return false, exceptions.ErrRedisHandle
 	}
 	key := consts.RedisTokenPrefix + userID.(string)
-	check, err := redisClient.Exists(key).Result()
+	check, err := redisClient.Get(key).Result()
 	if err != nil {
 		return false, exceptions.ErrRedisHandle
 	}
 
-	return check > 0, nil
+	return check == token, nil
 }
