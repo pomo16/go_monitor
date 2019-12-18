@@ -63,8 +63,8 @@ func generateToken(c *gin.Context, params *model.LoginParams) {
 		SigningKey: []byte(consts.Secret),
 	}
 	claims := utils.CustomClaims{
-		params.UserName,
-		jwtgo.StandardClaims{
+		UserName: params.UserName,
+		StandardClaims: jwtgo.StandardClaims{
 			NotBefore: time.Now().Unix() - 1000,                   // 签名生效时间
 			ExpiresAt: time.Now().Add(consts.TokenExpired).Unix(), // 过期时间15分钟
 			Issuer:    "pomo",                                     //签名的发行者
