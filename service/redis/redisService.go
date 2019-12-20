@@ -13,7 +13,7 @@ func PingRedis() {
 }
 
 func SetToken(c *gin.Context, token string) error {
-	userID, ok := c.Get("user_id")
+	userID, ok := c.Get(consts.CtxUIDField)
 	if !ok {
 		return exceptions.ErrRedisHandle
 	}
@@ -26,7 +26,7 @@ func SetToken(c *gin.Context, token string) error {
 }
 
 func QueryToken(c *gin.Context, token string) (bool, error) {
-	userID, ok := c.Get("user_id")
+	userID, ok := c.Get(consts.CtxUIDField)
 	if !ok {
 		return false, exceptions.ErrRedisHandle
 	}

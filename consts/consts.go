@@ -42,6 +42,7 @@ const (
 
 //Token
 const (
+	TokenHeader  = "X-Jwt-Token"
 	TokenExpired = 15 * time.Minute
 	Secret       = "sa9eu89pum94"
 )
@@ -49,4 +50,16 @@ const (
 //Redis
 const (
 	RedisTokenPrefix = "monitor:tk:"
+)
+
+//Context
+const (
+	CtxUNameField = "user_name"
+	CtxUIDField   = "user_id"
+)
+
+//Salt
+const (
+	UserIDSalt   = "uid%monitor_1"
+	PasswordSalt = "pd%monitor_2"
 )

@@ -3,8 +3,10 @@ package test
 import (
 	"context"
 	"fmt"
+	"gowatcher/go_monitor/consts"
 	"gowatcher/go_monitor/model"
 	"gowatcher/go_monitor/service/database"
+	"gowatcher/go_monitor/utils"
 	"testing"
 )
 
@@ -57,4 +59,19 @@ func TestUpdateTask(t *testing.T) {
 	if err != nil {
 		fmt.Println(err)
 	}
+}
+
+func TestCheckUser(t *testing.T) {
+	database.InitDB()
+	params := &model.LoginParams{
+		UserName: "pomo",
+		Password: utils.Md5AddSalt("123", consts.PasswordSalt, false),
+	}
+	user, err := database.CheckUser(context.Background(), params)
+	if err != nil {
+		fmt.Errorf("err: %v", err)
+		return
+	}
+
+	fmt.Printf("user: %v", user)
 }

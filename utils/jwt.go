@@ -12,25 +12,21 @@ type JWT struct {
 	SigningKey []byte
 }
 
-//CustomClaims 载荷
+//CustomClaims 自定义载荷
 type CustomClaims struct {
-	UserName string `json:"username"`
+	UserID   string `json:"user_id"`
+	UserName string `json:"user_name"`
 	jwt.StandardClaims
 }
 
 //NewJWT 新建一个jwt实例
 func NewJWT() *JWT {
 	return &JWT{
-		[]byte(GetSignKey()),
+		[]byte(consts.Secret),
 	}
 }
 
-//GetSignKey 获取signKey
-func GetSignKey() string {
-	return consts.Secret
-}
-
-//CreateToken 生成一个token
+//CreateToken 生成一个Token
 func (j *JWT) CreateToken(claims CustomClaims) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString(j.SigningKey)
@@ -47,7 +43,7 @@ func (j *JWT) ParseToken(tokenString string) (*CustomClaims, error) {
 	return nil, exceptions.ErrToken
 }
 
-// 更新token
+//RefreshToken 更新Token
 func (j *JWT) RefreshToken(tokenString string) (string, error) {
 	jwt.TimeFunc = func() time.Time {
 		return time.Unix(0, 0)
