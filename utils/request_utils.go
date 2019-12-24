@@ -5,6 +5,7 @@ import (
 	"strconv"
 )
 
+//GetParamString 解析字符串参数
 func GetParamString(ctx *gin.Context, param string, defaultValue string) string {
 	val := ctx.Request.FormValue(param)
 	if val == "" {
@@ -13,6 +14,7 @@ func GetParamString(ctx *gin.Context, param string, defaultValue string) string 
 	return val
 }
 
+//GetParamInt32 解析int32参数
 func GetParamInt32(ctx *gin.Context, param string, defalt int32) int32 {
 	val := ctx.Request.FormValue(param)
 	rvl, err := strconv.Atoi(val)
@@ -22,6 +24,7 @@ func GetParamInt32(ctx *gin.Context, param string, defalt int32) int32 {
 	return int32(rvl)
 }
 
+//GetParamInt16 解析int16参数
 func GetParamInt16(ctx *gin.Context, param string, defalt int16) int16 {
 	val := ctx.Request.FormValue(param)
 	rvl, err := strconv.Atoi(val)
@@ -39,6 +42,7 @@ func PackGinResult(code int, msg string) gin.H {
 	}
 }
 
+//GetHeader 获取头部
 func GetHeader(ctx *gin.Context, param string, defaultValue string) string {
 	value := ctx.Request.Header.Get(param)
 	if value == "" {
@@ -47,6 +51,7 @@ func GetHeader(ctx *gin.Context, param string, defaultValue string) string {
 	return value
 }
 
+//SetHeader 设置头部
 func SetHeader(ctx *gin.Context, param string, val string) {
 	header := ctx.Writer.Header()
 	header[param] = []string{val}

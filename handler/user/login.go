@@ -15,6 +15,7 @@ import (
 	"time"
 )
 
+//Login 登录
 func Login(c *gin.Context) {
 	parameter := service.ParseInputParameter(c)
 

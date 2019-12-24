@@ -10,8 +10,9 @@ import (
 	"net/http"
 )
 
+//Refresh 刷新token
 func Refresh(c *gin.Context) {
-	token := utils.GetHeader(c, "token", "")
+	token := utils.GetHeader(c, consts.TokenHeader, "")
 	newToken, err := utils.NewJWT().RefreshToken(token)
 	err = redis.SetToken(c, newToken)
 	if err != nil {

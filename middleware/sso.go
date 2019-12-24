@@ -8,6 +8,7 @@ import (
 	"net/http"
 )
 
+//CheckLogin 登录态校验
 func CheckLogin() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		token := utils.GetHeader(c, consts.TokenHeader, "")

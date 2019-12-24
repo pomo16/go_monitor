@@ -7,11 +7,13 @@ import (
 	"gowatcher/go_monitor/exceptions"
 )
 
+//PingRedis 测试连接Redis
 func PingRedis() {
 	pong, err := redisClient.Ping().Result()
 	fmt.Println(pong, err)
 }
 
+//SetToken 保存token
 func SetToken(c *gin.Context, token string) error {
 	userID, ok := c.Get(consts.CtxUIDField)
 	if !ok {
@@ -25,6 +27,7 @@ func SetToken(c *gin.Context, token string) error {
 	return nil
 }
 
+//QueryToken 查询token
 func QueryToken(c *gin.Context, token string) (bool, error) {
 	userID, ok := c.Get(consts.CtxUIDField)
 	if !ok {
@@ -37,4 +40,11 @@ func QueryToken(c *gin.Context, token string) (bool, error) {
 	}
 
 	return check == token, nil
+}
+
+//RemoveToken 删除token
+func RemoveToken(c *gin.Context) {
+	userID, _ := c.Get(consts.CtxUIDField)
+	key := consts.RedisTokenPrefix + userID.(string)
+	redisClient.Del(key)
 }

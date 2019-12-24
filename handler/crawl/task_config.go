@@ -9,6 +9,7 @@ import (
 	"gowatcher/go_monitor/processor/crawl"
 )
 
+//TaskConfig 配置任务
 func TaskConfig(c *gin.Context) {
 	context := model.NewTaskConfContext()
 

@@ -2,12 +2,18 @@ package user
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
+	"gowatcher/go_monitor/consts"
+	"gowatcher/go_monitor/service/redis"
+	"net/http"
 )
 
+//Logout 登出
 func Logout(c *gin.Context) {
-	logrus.Info("ping")
-	c.JSON(200, gin.H{
-		"message": "pong",
+	redis.RemoveToken(c)
+	c.JSON(http.StatusOK, gin.H{
+		"message":  consts.MsgSuccess,
+		"data":     map[string]interface{}{},
+		"err_no":   0,
+		"err_tips": "成功",
 	})
 }
