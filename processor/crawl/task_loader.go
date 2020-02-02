@@ -23,7 +23,7 @@ func (loader *TaskLoader) Process(ctx *gin.Context, runCtx model.IContext) excep
 	inputParameter := runCtx.GetInputParameter()
 	var taskList []*model.CrawlTask
 	var err error
-	switch inputParameter.QueryType {
+	switch inputParameter.CrawlParams.QueryType {
 	case consts.IdType:
 		if inputParameter.TaskID == 0 {
 			return exceptions.ErrRequestParams

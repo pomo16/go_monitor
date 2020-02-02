@@ -13,6 +13,8 @@ var (
 
 	ErrResultEmpty   = errors.New("result empty")
 	ErrRequestParams = errors.New("illegal request parameters")
+	ErrTimeParams    = errors.New("time params error")
+	ErrValueEmpty    = errors.New("value empty")
 
 	ErrProcessPanic  = errors.New("processor panic")
 	ErrProcessFailed = errors.New("processor failed")
@@ -20,6 +22,8 @@ var (
 
 	ErrLogin = errors.New("login error")
 	ErrToken = errors.New("token error")
+
+	ErrParseResult = errors.New("result parse error")
 )
 
 //返回给前端的业务错误码err_no

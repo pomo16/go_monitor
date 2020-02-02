@@ -46,3 +46,21 @@ type ITaskListContext interface {
 func NewTaskListContext() *TaskListContext {
 	return &TaskListContext{}
 }
+
+//CommentListContext 评论获取上下文
+type CommentListContext struct {
+	BaseContext
+	commentList []*Comment
+}
+
+//ICommentListContext 评论获取接口
+type ICommentListContext interface {
+	IContext
+	SetCommentList(commentList []*Comment)
+	GetCommentList() []*Comment
+}
+
+//NewCommentListContext context构造函数
+func NewCommentListContext() *CommentListContext {
+	return &CommentListContext{}
+}

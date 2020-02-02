@@ -1,17 +1,10 @@
 package redis
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"gowatcher/go_monitor/consts"
 	"gowatcher/go_monitor/exceptions"
 )
-
-//PingRedis 测试连接Redis
-func PingRedis() {
-	pong, err := redisClient.Ping().Result()
-	fmt.Println(pong, err)
-}
 
 //SetToken 保存token
 func SetToken(c *gin.Context, token string) error {

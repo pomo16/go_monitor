@@ -1,6 +1,7 @@
 package redis
 
 import (
+	"fmt"
 	"github.com/go-redis/redis/v7"
 	"gopkg.in/yaml.v2"
 	"gowatcher/go_monitor/consts"
@@ -38,4 +39,10 @@ func ReadYamlConfig() (*redis.Options, error) {
 		Password: redisConfig.Password,
 		DB:       0, // use default DB
 	}, nil
+}
+
+//PingRedis 测试连接Redis
+func PingRedis() {
+	pong, err := redisClient.Ping().Result()
+	fmt.Println(pong, err)
 }

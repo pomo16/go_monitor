@@ -7,8 +7,8 @@ import (
 	"gowatcher/go_monitor/consts"
 	"gowatcher/go_monitor/exceptions"
 	"gowatcher/go_monitor/model"
-	"gowatcher/go_monitor/service"
 	"gowatcher/go_monitor/service/database"
+	"gowatcher/go_monitor/service/parameter"
 	"gowatcher/go_monitor/service/redis"
 	"gowatcher/go_monitor/utils"
 	"net/http"
@@ -17,7 +17,7 @@ import (
 
 //Login 登录
 func Login(c *gin.Context) {
-	parameter := service.ParseInputParameter(c)
+	parameter := parameter.ParseInputParameter(c)
 
 	if parameter.UserName == "" || parameter.Password == "" {
 		errCode := exceptions.ErrRequestParams

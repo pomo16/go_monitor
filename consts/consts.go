@@ -4,7 +4,7 @@ import "time"
 
 //log文件相关
 const (
-	LogFilePath = "output/go_monitor_log"
+	LogFilePath = "go_monitor_log"
 	LogFileName = "monitor"
 )
 
@@ -62,4 +62,10 @@ const (
 const (
 	UserIDSalt   = "uid%monitor_1"
 	PasswordSalt = "pd%monitor_2"
+)
+
+//ES
+const (
+	ESTempIndex = "temp"
+	MaxCount    = 20000
 )

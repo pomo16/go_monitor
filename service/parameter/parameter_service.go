@@ -1,4 +1,4 @@
-package service
+package parameter
 
 import (
 	"github.com/gin-gonic/gin"
@@ -19,6 +19,15 @@ func ParseInputParameter(ctx *gin.Context) *model.InputParameter {
 			Status:     utils.GetParamInt16(ctx, "status", 0),
 			QueryType:  utils.GetParamInt16(ctx, "q_type", 0),
 			ConfigType: utils.GetParamInt16(ctx, "c_type", 0),
+		},
+		CommentParams: model.CommentParams{
+			BeginTime: utils.GetParamInt64(ctx, "begin_time", 0),
+			EndTime:   utils.GetParamInt64(ctx, "end_time", 0),
+			MainID:    utils.GetParamString(ctx, "main_id", ""),
+			QueryType: utils.GetParamInt16(ctx, "q_type", 0),
+			Limit:     utils.GetParamInt(ctx, "limit", 10),
+			OffSet:    utils.GetParamInt(ctx, "offset", 0),
+			AIDs:      utils.AIDsSplit(utils.GetParamString(ctx, "aids", "")),
 		},
 	}
 

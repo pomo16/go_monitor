@@ -6,8 +6,8 @@ type CrawlParams struct {
 	AppID      string
 	AppName    string
 	Status     int16
-	QueryType  int16
-	ConfigType int16
+	QueryType  int16 //查询方式
+	ConfigType int16 //配置方式：新增/更新
 }
 
 //CrawlTask 爬虫任务结构体

@@ -4,4 +4,5 @@ package model
 type InputParameter struct {
 	LoginParams
 	CrawlParams
+	CommentParams
 }

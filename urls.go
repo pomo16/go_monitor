@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"gowatcher/go_monitor/handler"
+	"gowatcher/go_monitor/handler/comment"
 	"gowatcher/go_monitor/handler/crawl"
 	"gowatcher/go_monitor/handler/user"
 	"gowatcher/go_monitor/middleware"
@@ -15,13 +16,16 @@ var outlookUrls = map[string]gin.HandlerFunc{
 
 var testUrls = map[string]gin.HandlerFunc{
 	"/ping": handler.Ping,
-	"/retk": user.Refresh,
 }
 
 var platformUrls = map[string]gin.HandlerFunc{
 	"/crawl/config": crawl.TaskConfig,
 	"/crawl/list":   crawl.TaskList,
-	"/logout":       user.Logout,
+
+	"/comment/list": comment.CommentList,
+
+	"/retk":   user.Refresh,
+	"/logout": user.Logout,
 }
 
 func InstanceRoutine() *gin.Engine {
@@ -33,7 +37,6 @@ func InstanceRoutine() *gin.Engine {
 
 	authGroup := r.Group("/auth")
 	for url, handler := range outlookUrls {
-		authGroup.GET(url, handler)
 		authGroup.POST(url, handler)
 	}
 

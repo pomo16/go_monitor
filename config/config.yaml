@@ -1,9 +1,12 @@
 mysql:
   username: root
-  password: 123456
-  host: localhost
+  password: Mysql123456/
+  host: 134.175.33.133
   port: 3306
 redis:
   host: localhost
   port: 6379
-  password: ""
+  password: "redis9898008"
+elasticsearch:
+  host: 101.132.150.8
+  port: 9200

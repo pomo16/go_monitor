@@ -26,15 +26,28 @@ func (infoCtx *TaskConfContext) GetTaskConf() *CrawlTask {
 	return &CrawlTask{}
 }
 
-//SetGetTask 设置爬虫任务获取参数
+//SetTaskList 设置爬虫任务列表
 func (infoCtx *TaskListContext) SetTaskList(taskList []*CrawlTask) {
 	infoCtx.taskList = taskList
 }
 
-//GetAddTask 获取爬虫任务添加
+//GetTaskList 获取爬虫任务列表
 func (infoCtx *TaskListContext) GetTaskList() []*CrawlTask {
 	if infoCtx.taskList != nil {
 		return infoCtx.taskList
 	}
 	return []*CrawlTask{}
+}
+
+//SetCommentList 设置爬虫任务获取参数
+func (infoCtx *CommentListContext) SetCommentList(commentList []*Comment) {
+	infoCtx.commentList = commentList
+}
+
+//GetCommentList 获取爬虫任务添加
+func (infoCtx *CommentListContext) GetCommentList() []*Comment {
+	if infoCtx.commentList != nil {
+		return infoCtx.commentList
+	}
+	return []*Comment{}
 }

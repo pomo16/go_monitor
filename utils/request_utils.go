@@ -3,6 +3,7 @@ package utils
 import (
 	"github.com/gin-gonic/gin"
 	"strconv"
+	"strings"
 )
 
 //GetParamString 解析字符串参数
@@ -34,12 +35,46 @@ func GetParamInt16(ctx *gin.Context, param string, defalt int16) int16 {
 	return int16(rvl)
 }
 
+//GetParamInt64 解析int64参数
+func GetParamInt64(ctx *gin.Context, param string, defalt int64) int64 {
+	val := ctx.Request.FormValue(param)
+	rvl, err := strconv.Atoi(val)
+	if err != nil {
+		return defalt
+	}
+	return int64(rvl)
+}
+
+//GetParamInt 解析int参数
+func GetParamInt(ctx *gin.Context, param string, defalt int) int {
+	val := ctx.Request.FormValue(param)
+	rvl, err := strconv.Atoi(val)
+	if err != nil {
+		return defalt
+	}
+	return rvl
+}
+
 //PackGinResult 打包返回结果
 func PackGinResult(code int, msg string) gin.H {
 	return gin.H{
 		"status_code": code,
 		"msg":         msg,
 	}
+}
+
+//AIDsSplit 对输入APPID字符串进行分割
+func AIDsSplit(src string) []int64 {
+	result := []int64{}
+	str := strings.Split(src, "|")
+	for _, s := range str {
+		i, err := strconv.ParseInt(strings.TrimSpace(s), 10, 64)
+		if err != nil || i == 0 {
+			continue
+		}
+		result = append(result, i)
+	}
+	return result
 }
 
 //GetHeader 获取头部
