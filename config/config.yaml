@@ -1,7 +1,7 @@
 mysql:
   username: root
   password: Mysql123456/
-  host: 134.175.33.133
+  host: localhost
   port: 3306
 redis:
   host: localhost
