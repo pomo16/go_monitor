@@ -35,6 +35,7 @@ func InstanceRoutine() *gin.Engine {
 	r := gin.New()
 	r.Use(gin.Recovery())
 	r.Use(middleware.CustomLogger())
+	r.Use(middleware.Cors)
 
 	authGroup := r.Group("/auth")
 	for url, handler := range outlookUrls {

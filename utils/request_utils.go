@@ -1,7 +1,10 @@
 package utils
 
 import (
+	"encoding/json"
 	"github.com/gin-gonic/gin"
+	"gowatcher/go_monitor/model"
+	"io/ioutil"
 	"strconv"
 	"strings"
 )
@@ -90,4 +93,12 @@ func GetHeader(ctx *gin.Context, param string, defaultValue string) string {
 func SetHeader(ctx *gin.Context, param string, val string) {
 	header := ctx.Writer.Header()
 	header[param] = []string{val}
+}
+
+//GetLoginParams 获取登录参数
+func GetLoginParams(ctx *gin.Context) model.LoginParams {
+	body, _ := ioutil.ReadAll(ctx.Request.Body)
+	params := &model.LoginParams{}
+	json.Unmarshal(body, params)
+	return *params
 }

@@ -10,7 +10,7 @@ import (
 //CheckUser 通过UserName和password获取用户信息
 func CheckUser(ctx context.Context, params *model.LoginParams) (*model.User, error) {
 	rows, err := database.Table("gowatcher.user_info_table").Debug().
-		Select("id, user_id, user_name, password").
+		Select("id, user_name, password").
 		Where("user_name = ? and password = ?", params.UserName, params.Password).Rows()
 
 	defer func() {

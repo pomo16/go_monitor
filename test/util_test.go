@@ -12,7 +12,6 @@ import (
 func TestJwt(t *testing.T) {
 	jwt := utils.NewJWT()
 	token, _ := jwt.CreateToken(utils.CustomClaims{
-		UserID:   "",
 		UserName: "",
 		StandardClaims: jwtgo.StandardClaims{
 			NotBefore: time.Now().Unix() - 1000,                   // 签名生效时间
@@ -28,10 +27,10 @@ func TestJwt(t *testing.T) {
 		return
 	}
 
-	fmt.Printf("claims: %v", claims.UserID)
+	fmt.Printf("claims: %v", claims.UserName)
 }
 
 func TestMD5(t *testing.T) {
-	fmt.Println(utils.Md5AddSalt("pomo", consts.UserIDSalt, true))
-	fmt.Println(utils.Md5AddSalt("123", consts.PasswordSalt, false))
+	fmt.Println(utils.Md5AddSalt("pomo", consts.UserNameSalt, true))
+	fmt.Println(utils.Md5AddSalt("123456", consts.PasswordSalt, false))
 }

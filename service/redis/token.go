@@ -8,11 +8,11 @@ import (
 
 //SetToken 保存token
 func SetToken(c *gin.Context, token string) error {
-	userID, ok := c.Get(consts.CtxUIDField)
+	userName, ok := c.Get(consts.CtxUNameField)
 	if !ok {
 		return exceptions.ErrRedisHandle
 	}
-	key := consts.RedisTokenPrefix + userID.(string)
+	key := consts.RedisTokenPrefix + userName.(string)
 	err := redisClient.Set(key, token, consts.TokenExpired).Err()
 	if err != nil {
 		return exceptions.ErrRedisHandle
@@ -22,7 +22,7 @@ func SetToken(c *gin.Context, token string) error {
 
 //QueryToken 查询token
 func QueryToken(c *gin.Context, token string) (bool, error) {
-	userID, ok := c.Get(consts.CtxUIDField)
+	userID, ok := c.Get(consts.CtxUNameField)
 	if !ok {
 		return false, exceptions.ErrRedisHandle
 	}
@@ -37,7 +37,7 @@ func QueryToken(c *gin.Context, token string) (bool, error) {
 
 //RemoveToken 删除token
 func RemoveToken(c *gin.Context) {
-	userID, _ := c.Get(consts.CtxUIDField)
+	userID, _ := c.Get(consts.CtxUNameField)
 	key := consts.RedisTokenPrefix + userID.(string)
 	redisClient.Del(key)
 }

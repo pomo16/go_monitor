@@ -14,7 +14,6 @@ type JWT struct {
 
 //CustomClaims 自定义载荷
 type CustomClaims struct {
-	UserID   string `json:"user_id"`
 	UserName string `json:"user_name"`
 	jwt.StandardClaims
 }

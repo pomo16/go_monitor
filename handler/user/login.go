@@ -18,7 +18,6 @@ import (
 //Login 登录
 func Login(c *gin.Context) {
 	parameter := parameter.ParseInputParameter(c)
-
 	if parameter.UserName == "" || parameter.Password == "" {
 		errCode := exceptions.ErrRequestParams
 		logrus.Errorf("user %v login error: %v", parameter.UserName, errCode)
@@ -44,8 +43,7 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	if user != nil {
-		c.Set(consts.CtxUIDField, user.UserID)
+	if user.ID != 0 {
 		c.Set(consts.CtxUNameField, user.UserName)
 		generateToken(c)
 	} else {
@@ -61,8 +59,7 @@ func generateToken(c *gin.Context) {
 	}
 
 	var ok bool
-	var userID, userName interface{}
-	userID, ok = c.Get(consts.CtxUIDField)
+	var userName interface{}
 	userName, ok = c.Get(consts.CtxUNameField)
 	if !ok {
 		c.JSON(http.StatusUnauthorized, utils.PackGinResult(http.StatusUnauthorized, "token error"))
@@ -71,7 +68,6 @@ func generateToken(c *gin.Context) {
 	}
 
 	claims := utils.CustomClaims{
-		UserID:   userID.(string),
 		UserName: userName.(string),
 		StandardClaims: jwtgo.StandardClaims{
 			NotBefore: time.Now().Unix() - 1000,                   // 签名生效时间

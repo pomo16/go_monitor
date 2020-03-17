@@ -20,7 +20,6 @@ func CheckLogin() gin.HandlerFunc {
 
 		jwt := utils.NewJWT()
 		claims, _ := jwt.ParseToken(token)
-		c.Set(consts.CtxUIDField, claims.UserID)
 		c.Set(consts.CtxUNameField, claims.UserName)
 
 		isPass, _ := redis.QueryToken(c, token)

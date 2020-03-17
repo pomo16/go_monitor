@@ -55,12 +55,11 @@ const (
 //Context
 const (
 	CtxUNameField = "user_name"
-	CtxUIDField   = "user_id"
 )
 
 //Salt
 const (
-	UserIDSalt   = "uid%monitor_1"
+	UserNameSalt = "uid%monitor_1"
 	PasswordSalt = "pd%monitor_2"
 )
 
