@@ -9,8 +9,8 @@ import (
 	"gowatcher/go_monitor/processor/comment"
 )
 
-//CommentList 获取评论
-func CommentList(c *gin.Context) {
+//List 获取评论
+func List(c *gin.Context) {
 	context := model.NewCommentListContext()
 
 	preContextLoader := &processor.PreContextLoader{}
@@ -26,7 +26,7 @@ func CommentList(c *gin.Context) {
 		return
 	}
 
-	commentListContextLoader := &comment.CommentLoader{}
+	commentListContextLoader := &comment.ListLoader{}
 	commentListContextCode := processor.LoaderCommon(c, context, commentListContextLoader)
 	if commentListContextCode != nil {
 		errNo, errTips := exceptions.ErrConvert(commentListContextCode)
@@ -61,6 +61,8 @@ func packCommentList(context model.ICommentListContext) map[string]interface{} {
 			"content":      commentList[0].Content,
 			"rating":       commentList[0].Rating,
 			"version":      commentList[0].Version,
+			"polarity":     commentList[0].Polarity,
+			"score":        commentList[0].Score,
 			"publish_time": commentList[0].PublishTime,
 			"crawl_time":   commentList[0].CrawlTime,
 		}
@@ -75,6 +77,8 @@ func packCommentList(context model.ICommentListContext) map[string]interface{} {
 				"content":      val.Content,
 				"rating":       val.Rating,
 				"version":      val.Version,
+				"polarity":     val.Polarity,
+				"score":        val.Score,
 				"publish_time": val.PublishTime,
 				"crawl_time":   val.CrawlTime,
 			}

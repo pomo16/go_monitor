@@ -39,15 +39,28 @@ func (infoCtx *TaskListContext) GetTaskList() []*CrawlTask {
 	return []*CrawlTask{}
 }
 
-//SetCommentList 设置爬虫任务获取参数
+//SetCommentList 设置评论列表
 func (infoCtx *CommentListContext) SetCommentList(commentList []*Comment) {
 	infoCtx.commentList = commentList
 }
 
-//GetCommentList 获取爬虫任务添加
+//GetCommentList 获取评论列表
 func (infoCtx *CommentListContext) GetCommentList() []*Comment {
 	if infoCtx.commentList != nil {
 		return infoCtx.commentList
 	}
 	return []*Comment{}
+}
+
+//SetCommentCount 设置评论计数
+func (infoCtx *CommentCountContext) SetCommentCount(commentCount *CommentCount) {
+	infoCtx.commentCount = commentCount
+}
+
+//GetCommentCount 获取评论计数
+func (infoCtx *CommentCountContext) GetCommentCount() *CommentCount {
+	if infoCtx.commentCount != nil {
+		return infoCtx.commentCount
+	}
+	return &CommentCount{}
 }

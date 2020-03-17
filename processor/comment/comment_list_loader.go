@@ -10,14 +10,14 @@ import (
 	"gowatcher/go_monitor/service/parameter"
 )
 
-//CommentLoader 评论加载器
-type CommentLoader struct{}
+//ListLoader 评论加载器
+type ListLoader struct{}
 
 //Process 加载评论
-func (loader *CommentLoader) Process(ctx *gin.Context, runCtx model.IContext) exceptions.ErrProcessor {
+func (loader *ListLoader) Process(ctx *gin.Context, runCtx model.IContext) exceptions.ErrProcessor {
 	listCtx, ok := runCtx.(model.ICommentListContext)
 	if !ok {
-		logrus.Warn(ctx, "CommentList loader listCtx error")
+		logrus.Warn(ctx, "Comment List loader listCtx error")
 		return exceptions.ErrTypeAssert
 	}
 
@@ -47,11 +47,11 @@ func (loader *CommentLoader) Process(ctx *gin.Context, runCtx model.IContext) ex
 		return exceptions.ErrResultEmpty
 	}
 
-	logrus.Error("CommentList loader return err: %v", err)
+	logrus.Error("Comment List loader return err: %v", err)
 	return exceptions.ErrProcessFailed
 }
 
 //Name 获取processor名
-func (loader *CommentLoader) Name() string {
-	return "CommentLoader"
+func (loader *ListLoader) Name() string {
+	return "ListLoader"
 }

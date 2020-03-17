@@ -3,11 +3,13 @@ package elasticsearch
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/olivere/elastic/v7"
 	"github.com/sirupsen/logrus"
 	"gowatcher/go_monitor/consts"
 	"gowatcher/go_monitor/exceptions"
 	"gowatcher/go_monitor/model"
+	"strconv"
 )
 
 //CommentCount 根据指定条件获取计数
@@ -15,8 +17,12 @@ func CommentCount(ctx context.Context, params *model.CommentCountParams) (*model
 	boolQuery := elastic.NewBoolQuery()
 	boolQuery = PublishTimeFilter(boolQuery, params.BeginTime, params.EndTime)
 
+	if params.APPIDEnable {
+		boolQuery = AIDsMatcher(boolQuery, params.AIDs)
+	}
+
 	result, err := elasticClient.Count().
-		Index(consts.ESTempIndex).
+		Index(consts.ESIndex).
 		Query(boolQuery).
 		Do(ctx)
 
@@ -47,7 +53,7 @@ func CommentList(ctx context.Context, params *model.CommentListParams) ([]*model
 	}
 
 	result, err := elasticClient.Search().
-		Index(consts.ESTempIndex).
+		Index(consts.ESIndex).
 		Query(boolQuery).
 		Sort("publish_timestamp", false).
 		From(params.OffSet).
@@ -76,6 +82,7 @@ func commentOutputter(res *elastic.SearchResult) ([]*model.Comment, error) {
 			if err := json.Unmarshal(hit.Source, comment); err != nil {
 				return nil, exceptions.ErrParseResult
 			}
+			comment.Score, _ = strconv.ParseFloat(fmt.Sprintf("%.3f", comment.Score), 64)
 			commentList = append(commentList, comment)
 		}
 	}
@@ -88,7 +95,7 @@ func QueryByMainID(ctx context.Context, mainID string) ([]*model.Comment, error)
 	boolQuery = MainIDFilter(boolQuery, mainID)
 
 	result, err := elasticClient.Search().
-		Index(consts.ESTempIndex).
+		Index(consts.ESIndex).
 		Query(boolQuery).
 		Do(ctx)
 

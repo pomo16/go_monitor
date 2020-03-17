@@ -1,7 +1,7 @@
 RUN_NAME="go_monitor"
 
 run:
-	./output/${RUN_NAME}_dev
+	cd ./output/ && ./${RUN_NAME}
 
 build:
 	gofmt -w .

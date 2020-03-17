@@ -66,6 +66,6 @@ const (
 
 //ES
 const (
-	ESTempIndex = "temp"
-	MaxCount    = 20000
+	ESIndex  = "comment"
+	MaxCount = 20000
 )

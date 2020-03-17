@@ -22,7 +22,8 @@ var platformUrls = map[string]gin.HandlerFunc{
 	"/crawl/config": crawl.TaskConfig,
 	"/crawl/list":   crawl.TaskList,
 
-	"/comment/list": comment.CommentList,
+	"/comment/list":  comment.List,
+	"/comment/count": comment.Count,
 
 	"/retk":   user.Refresh,
 	"/logout": user.Logout,

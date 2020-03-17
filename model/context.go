@@ -64,3 +64,21 @@ type ICommentListContext interface {
 func NewCommentListContext() *CommentListContext {
 	return &CommentListContext{}
 }
+
+//CommentCountContext 评论计数获取上下文
+type CommentCountContext struct {
+	BaseContext
+	commentCount *CommentCount
+}
+
+//ICommentCountContext 评论计数获取接口
+type ICommentCountContext interface {
+	IContext
+	SetCommentCount(commentCount *CommentCount)
+	GetCommentCount() *CommentCount
+}
+
+//NewCommentCountContext context构造函数
+func NewCommentCountContext() *CommentCountContext {
+	return &CommentCountContext{}
+}
