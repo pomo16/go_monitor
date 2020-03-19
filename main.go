@@ -14,7 +14,7 @@ func Init() {
 
 func main() {
 	Init()
-	if err := InstanceRoutine().Run("112.74.86.176:8888"); err != nil {
+	if err := InstanceRoutine().Run(":8888"); err != nil {
 		panic(err)
 	}
 }
