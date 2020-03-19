@@ -51,6 +51,7 @@ func InstanceRoutine() *gin.Engine {
 	}
 
 	monitorGroup := r.Group("/monitor")
+	monitorGroup.Use(middleware.CheckLogin())
 	for url, handler := range platformUrls {
 		monitorGroup.GET(url, handler)
 		monitorGroup.POST(url, handler)

@@ -43,8 +43,8 @@ const (
 
 //Token
 const (
-	TokenHeader  = "X-Jwt-Token"
-	TokenExpired = 15 * time.Minute
+	TokenHeader  = "Authorization"
+	TokenExpired = 24 * time.Hour
 	Secret       = "sa9eu89pum94"
 )
 
