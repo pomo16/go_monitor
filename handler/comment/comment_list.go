@@ -7,6 +7,7 @@ import (
 	"gowatcher/go_monitor/model"
 	"gowatcher/go_monitor/processor"
 	"gowatcher/go_monitor/processor/comment"
+	"strconv"
 )
 
 //List 获取评论
@@ -52,6 +53,7 @@ func packCommentList(context model.ICommentListContext) map[string]interface{} {
 	inputParameter := context.GetInputParameter()
 	listMap := make([]map[string]interface{}, len(commentList))
 	if inputParameter.CommentParams.QueryType == consts.IdType {
+		rating, _ := strconv.ParseInt(commentList[0].Rating, 10, 64)
 		listMap[0] = map[string]interface{}{
 			"comment_id":   commentList[0].CommentId,
 			"main_id":      commentList[0].MainId,
@@ -59,7 +61,7 @@ func packCommentList(context model.ICommentListContext) map[string]interface{} {
 			"app_id":       commentList[0].AppID,
 			"title":        commentList[0].Title,
 			"content":      commentList[0].Content,
-			"rating":       commentList[0].Rating,
+			"rating":       rating,
 			"version":      commentList[0].Version,
 			"polarity":     commentList[0].Polarity,
 			"score":        commentList[0].Score,
@@ -68,6 +70,7 @@ func packCommentList(context model.ICommentListContext) map[string]interface{} {
 		}
 	} else if inputParameter.CommentParams.QueryType == consts.ListType {
 		for key, val := range commentList {
+			rating, _ := strconv.ParseInt(commentList[key].Rating, 10, 64)
 			listMap[key] = map[string]interface{}{
 				"comment_id":   val.CommentId,
 				"main_id":      val.MainId,
@@ -75,7 +78,7 @@ func packCommentList(context model.ICommentListContext) map[string]interface{} {
 				"app_id":       val.AppID,
 				"title":        val.Title,
 				"content":      val.Content,
-				"rating":       val.Rating,
+				"rating":       rating,
 				"version":      val.Version,
 				"polarity":     val.Polarity,
 				"score":        val.Score,

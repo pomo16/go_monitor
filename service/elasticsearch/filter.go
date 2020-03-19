@@ -20,3 +20,8 @@ func AIDsMatcher(boolQ *elastic.BoolQuery, aIDs []int64) *elastic.BoolQuery {
 	}
 	return boolQ.Must(boolSubQ.MinimumNumberShouldMatch(1)) //至少匹配一个APPID
 }
+
+//PolarityFilter 情感过滤条件
+func PolarityFilter(boolQ *elastic.BoolQuery, polarity string) *elastic.BoolQuery {
+	return boolQ.Must(elastic.NewMatchQuery("polarity", polarity))
+}

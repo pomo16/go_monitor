@@ -37,7 +37,8 @@ const (
 
 //字符串时间类型
 const (
-	SQLTFormat = "2006-01-02 15:04:05" //SQL标准时间字符串格式
+	SQLTFormat   = "2006-01-02 15:04:05" //SQL标准时间字符串格式
+	HISTOTFormat = "01-02"
 )
 
 //Token
@@ -67,4 +68,9 @@ const (
 const (
 	ESIndex  = "comment"
 	MaxCount = 20000
+)
+
+//timestamp
+const (
+	OneDay = int64(3600 * 24)
 )

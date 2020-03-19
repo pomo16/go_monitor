@@ -6,6 +6,7 @@ import (
 	"gowatcher/go_monitor/exceptions"
 	"gowatcher/go_monitor/model"
 	"gowatcher/go_monitor/service/elasticsearch"
+	"gowatcher/go_monitor/service/parameter"
 )
 
 //CountLoader 评论信息计数loader
@@ -21,16 +22,10 @@ func (loader *CountLoader) Process(ctx *gin.Context, runCtx model.IContext) exce
 
 	inputParameter := runCtx.GetInputParameter()
 
-	//时间错误
-	if inputParameter.BeginTime == 0 || inputParameter.EndTime == 0 || inputParameter.BeginTime > inputParameter.EndTime {
+	cntParams, err := parameter.ParseCommentCountParams(ctx, inputParameter)
+	if err != nil {
 		logrus.Error("Comment Count loader params error")
-		return exceptions.ErrTimeParams
-	}
-
-	cntParams := &model.CommentCountParams{
-		BeginTime: inputParameter.BeginTime,
-		EndTime:   inputParameter.EndTime,
-		AIDs:      inputParameter.AIDs,
+		return err
 	}
 
 	cntInfo, err := elasticsearch.CommentCount(ctx, cntParams)

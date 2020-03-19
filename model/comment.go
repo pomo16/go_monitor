@@ -4,6 +4,7 @@ type CommentParams struct {
 	BeginTime int64 //开始时间
 	EndTime   int64 //结束时间
 	QueryType int16 //查询方式
+	Polarity  string
 	AIDs      []int64
 	MainID    string
 	OffSet    int
@@ -11,10 +12,19 @@ type CommentParams struct {
 }
 
 type CommentCountParams struct {
-	BeginTime   int64
-	EndTime     int64
-	AIDs        []int64
-	APPIDEnable bool
+	BeginTime      int64
+	EndTime        int64
+	Polarity       string
+	PolarityEnable bool
+	AIDs           []int64
+	APPIDEnable    bool
+}
+
+type CommentHistoParams struct {
+	BeginTime      int64
+	EndTime        int64
+	Polarity       string
+	PolarityEnable bool
 }
 
 type CommentListParams struct {
@@ -50,4 +60,10 @@ type CommentCount struct {
 	BeginTime int64 //开始时间
 	EndTime   int64 //结束时间
 	Count     int64 //计数
+}
+
+type CommentHistogram struct {
+	BeginTime int64   //起始时间
+	EndTime   int64   //结束时间
+	Counts    []int64 //指定范围内数据量
 }

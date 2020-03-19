@@ -92,7 +92,11 @@ func generateToken(c *gin.Context) {
 	}
 
 	logrus.Info(token)
-	c.JSON(http.StatusOK, utils.PackGinResult(http.StatusOK, "login success!"))
+	c.JSON(http.StatusOK, gin.H{
+		"message":     "login success",
+		"status_code": 200,
+		"token":       token,
+	})
 
 	return
 }

@@ -82,3 +82,21 @@ type ICommentCountContext interface {
 func NewCommentCountContext() *CommentCountContext {
 	return &CommentCountContext{}
 }
+
+//CommentHistoContext 评论直方图数据上下文
+type CommentHistoContext struct {
+	BaseContext
+	commentHisto *CommentHistogram
+}
+
+//ICommentHistoContext 评论直方图数据读写接口
+type ICommentHistoContext interface {
+	IContext
+	SetCommentHisto(commentHisto *CommentHistogram)
+	GetCommentHisto() *CommentHistogram
+}
+
+//NewCommentHistoContext context构造函数
+func NewCommentHistoContext() *CommentHistoContext {
+	return &CommentHistoContext{}
+}

@@ -36,6 +36,11 @@ func checkAppIDSwitch(aIDs []int64) bool {
 	return len(aIDs) > 0
 }
 
+//checkPolaritySwitch 检查情感开关
+func checkPolaritySwitch(polarity string) bool {
+	return polarity != ""
+}
+
 //ParseCommentListParams 解析查询参数
 func ParseCommentListParams(ctx context.Context, inputParams *model.InputParameter) (*model.CommentListParams, error) {
 	if inputParams == nil {
@@ -65,5 +70,49 @@ func ParseCommentListParams(ctx context.Context, inputParams *model.InputParamet
 	params.Limit = checkLimit(params.Limit)
 	params.TimeEnable = checkTimeSwitch(params.BeginTime, params.EndTime)
 	params.APPIDEnable = checkAppIDSwitch(params.AIDs)
+	return params, nil
+}
+
+//ParseCommentCountParams 解析计数参数
+func ParseCommentCountParams(ctx context.Context, inputParams *model.InputParameter) (*model.CommentCountParams, error) {
+	if inputParams == nil {
+		return nil, exceptions.ErrValueEmpty
+	}
+
+	params := &model.CommentCountParams{
+		BeginTime: inputParams.BeginTime,
+		EndTime:   inputParams.EndTime,
+		Polarity:  inputParams.Polarity,
+		AIDs:      inputParams.AIDs,
+	}
+
+	//时间错误
+	if inputParams.BeginTime == 0 || inputParams.EndTime == 0 || inputParams.BeginTime > inputParams.EndTime {
+		return nil, exceptions.ErrTimeParams
+	}
+
+	params.PolarityEnable = checkPolaritySwitch(params.Polarity)
+	params.APPIDEnable = checkAppIDSwitch(params.AIDs)
+	return params, nil
+}
+
+//ParseCommentHistoParams 解析直方图参数
+func ParseCommentHistoParams(ctx context.Context, inputParams *model.InputParameter) (*model.CommentHistoParams, error) {
+	if inputParams == nil {
+		return nil, exceptions.ErrValueEmpty
+	}
+
+	params := &model.CommentHistoParams{
+		BeginTime: inputParams.BeginTime,
+		EndTime:   inputParams.EndTime,
+		Polarity:  inputParams.Polarity,
+	}
+
+	//时间错误
+	if inputParams.BeginTime == 0 || inputParams.EndTime == 0 || inputParams.BeginTime > inputParams.EndTime {
+		return nil, exceptions.ErrTimeParams
+	}
+
+	params.PolarityEnable = checkPolaritySwitch(params.Polarity)
 	return params, nil
 }

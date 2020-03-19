@@ -21,6 +21,7 @@ func ParseInputParameter(ctx *gin.Context) *model.InputParameter {
 			BeginTime: utils.GetParamInt64(ctx, "begin_time", 0),
 			EndTime:   utils.GetParamInt64(ctx, "end_time", 0),
 			MainID:    utils.GetParamString(ctx, "main_id", ""),
+			Polarity:  utils.GetParamString(ctx, "polarity", ""),
 			QueryType: utils.GetParamInt16(ctx, "q_type", 0),
 			Limit:     utils.GetParamInt(ctx, "limit", 10),
 			OffSet:    utils.GetParamInt(ctx, "offset", 0),

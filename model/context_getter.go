@@ -64,3 +64,16 @@ func (infoCtx *CommentCountContext) GetCommentCount() *CommentCount {
 	}
 	return &CommentCount{}
 }
+
+//SetCommentHisto 设置评论直方图数据
+func (infoCtx *CommentHistoContext) SetCommentHisto(commentHisto *CommentHistogram) {
+	infoCtx.commentHisto = commentHisto
+}
+
+//GetCommentHisto 获取评论直方图数据
+func (infoCtx *CommentHistoContext) GetCommentHisto() *CommentHistogram {
+	if infoCtx.commentHisto != nil {
+		return infoCtx.commentHisto
+	}
+	return &CommentHistogram{}
+}
