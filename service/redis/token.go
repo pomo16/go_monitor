@@ -20,13 +20,31 @@ func SetToken(c *gin.Context, token string) error {
 	return nil
 }
 
+//IsTokenExisted 查看token是否存在，如果存在则返回现有token，并刷新token时间
+func IsTokenExisted(c *gin.Context) (string, bool, error) {
+	userName, ok := c.Get(consts.CtxUNameField)
+	if !ok {
+		return "", false, exceptions.ErrRedisHandle
+	}
+	key := consts.RedisTokenPrefix + userName.(string)
+	token, err := redisClient.Get(key).Result()
+	if err != nil {
+		return "", false, exceptions.ErrRedisHandle
+	}
+	err = redisClient.Set(key, token, consts.TokenExpired).Err()
+	if err != nil {
+		return "", false, exceptions.ErrRedisHandle
+	}
+	return token, true, nil
+}
+
 //QueryToken 查询token
 func QueryToken(c *gin.Context, token string) (bool, error) {
-	userID, ok := c.Get(consts.CtxUNameField)
+	userName, ok := c.Get(consts.CtxUNameField)
 	if !ok {
 		return false, exceptions.ErrRedisHandle
 	}
-	key := consts.RedisTokenPrefix + userID.(string)
+	key := consts.RedisTokenPrefix + userName.(string)
 	check, err := redisClient.Get(key).Result()
 	if err != nil {
 		return false, exceptions.ErrRedisHandle
@@ -37,7 +55,7 @@ func QueryToken(c *gin.Context, token string) (bool, error) {
 
 //RemoveToken 删除token
 func RemoveToken(c *gin.Context) {
-	userID, _ := c.Get(consts.CtxUNameField)
-	key := consts.RedisTokenPrefix + userID.(string)
+	userName, _ := c.Get(consts.CtxUNameField)
+	key := consts.RedisTokenPrefix + userName.(string)
 	redisClient.Del(key)
 }

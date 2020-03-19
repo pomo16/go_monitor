@@ -45,7 +45,16 @@ func Login(c *gin.Context) {
 
 	if user.ID != 0 {
 		c.Set(consts.CtxUNameField, user.UserName)
-		generateToken(c)
+		token, exist, err := redis.IsTokenExisted(c)
+		if !exist || err != nil {
+			generateToken(c)
+		}
+		logrus.Info(token)
+		c.JSON(http.StatusOK, gin.H{
+			"message":     "login success",
+			"status_code": 200,
+			"token":       token,
+		})
 	} else {
 		logrus.Errorf("user %v login error: %v", params.UserName, exceptions.ErrLogin)
 		c.JSON(http.StatusOK, utils.PackGinResult(http.StatusUnauthorized, "login error"))
