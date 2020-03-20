@@ -9,7 +9,7 @@ const (
 )
 
 //config文件路径
-const ConfigFile = "/config/config.yaml"
+const ConfigFile = "config/config.yaml"
 
 //爬虫任务状态
 const (
