@@ -29,9 +29,10 @@ func TestIsTokenExisted(t *testing.T) {
 	redis.InitRedis()
 	ctx := gin.Context{}
 	ctx.Set("user_name", "pomo1")
-	res, err := redis.IsTokenExisted(&ctx)
+	token, res, err := redis.IsTokenExisted(&ctx)
 	if err != nil {
 		fmt.Println("err:", err)
 	}
+	fmt.Println(token)
 	fmt.Println(res)
 }
