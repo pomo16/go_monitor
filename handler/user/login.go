@@ -48,13 +48,14 @@ func Login(c *gin.Context) {
 		token, exist, err := redis.IsTokenExisted(c)
 		if !exist || err != nil {
 			generateToken(c)
+		} else {
+			logrus.Info(token)
+			c.JSON(http.StatusOK, gin.H{
+				"message":     "login success",
+				"status_code": 200,
+				"token":       token,
+			})
 		}
-		logrus.Info(token)
-		c.JSON(http.StatusOK, gin.H{
-			"message":     "login success",
-			"status_code": 200,
-			"token":       token,
-		})
 	} else {
 		logrus.Errorf("user %v login error: %v", params.UserName, exceptions.ErrLogin)
 		c.JSON(http.StatusOK, utils.PackGinResult(http.StatusUnauthorized, "login error"))
