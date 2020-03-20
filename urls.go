@@ -38,19 +38,19 @@ func InstanceRoutine() *gin.Engine {
 	r.Use(middleware.CustomLogger())
 	r.Use(middleware.Cors)
 
-	authGroup := r.Group("/auth")
+	authGroup := r.Group("/api/v1/auth")
 	for url, handler := range outlookUrls {
 		authGroup.POST(url, handler)
 	}
 
-	testGroup := r.Group("/test")
+	testGroup := r.Group("/api/v1/test")
 	testGroup.Use(middleware.CheckLogin())
 	for url, handler := range testUrls {
 		testGroup.GET(url, handler)
 		testGroup.POST(url, handler)
 	}
 
-	monitorGroup := r.Group("/monitor")
+	monitorGroup := r.Group("/api/v1/monitor")
 	monitorGroup.Use(middleware.CheckLogin())
 	for url, handler := range platformUrls {
 		monitorGroup.GET(url, handler)
