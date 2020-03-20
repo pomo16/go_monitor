@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"gowatcher/go_monitor/handler"
+	"gowatcher/go_monitor/handler/analyze"
 	"gowatcher/go_monitor/handler/comment"
 	"gowatcher/go_monitor/handler/crawl"
 	"gowatcher/go_monitor/handler/user"
@@ -25,6 +26,8 @@ var platformUrls = map[string]gin.HandlerFunc{
 	"/comment/list":      comment.List,
 	"/comment/count":     comment.Count,
 	"/comment/histogram": comment.Histogram,
+
+	"/analyze/polarity": analyze.Polarity,
 
 	"/retk":   user.Refresh,
 	"/logout": user.Logout,

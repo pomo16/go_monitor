@@ -5,4 +5,5 @@ type InputParameter struct {
 	LoginParams
 	CrawlParams
 	CommentParams
+	AnalyzeParams
 }

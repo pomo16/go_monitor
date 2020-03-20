@@ -27,6 +27,9 @@ func ParseInputParameter(ctx *gin.Context) *model.InputParameter {
 			OffSet:    utils.GetParamInt(ctx, "offset", 0),
 			AIDs:      utils.AIDsSplit(utils.GetParamString(ctx, "aids", "")),
 		},
+		AnalyzeParams: model.AnalyzeParams{
+			Content: utils.GetParamString(ctx, "content", ""),
+		},
 	}
 
 	return parameter

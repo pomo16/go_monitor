@@ -100,3 +100,21 @@ type ICommentHistoContext interface {
 func NewCommentHistoContext() *CommentHistoContext {
 	return &CommentHistoContext{}
 }
+
+//AnalyzePolarityContext 情感分析获取上下文
+type AnalyzePolarityContext struct {
+	BaseContext
+	analyzePolarity *AnalyzePolarity
+}
+
+//IAnalyzePolarityContext 情感分析获取接口
+type IAnalyzePolarityContext interface {
+	IContext
+	SetAnalyzePolarity(analyzePolarity *AnalyzePolarity)
+	GetAnalyzePolarity() *AnalyzePolarity
+}
+
+//NewAnalyzePolarityContext context构造函数
+func NewAnalyzePolarityContext() *AnalyzePolarityContext {
+	return &AnalyzePolarityContext{}
+}

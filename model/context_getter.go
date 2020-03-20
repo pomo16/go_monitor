@@ -77,3 +77,16 @@ func (infoCtx *CommentHistoContext) GetCommentHisto() *CommentHistogram {
 	}
 	return &CommentHistogram{}
 }
+
+//SetAnalyzePolarity 设置情感分析
+func (infoCtx *AnalyzePolarityContext) SetAnalyzePolarity(analyzePolarity *AnalyzePolarity) {
+	infoCtx.analyzePolarity = analyzePolarity
+}
+
+//GetAnalyzePolarity 获取情感分析
+func (infoCtx *AnalyzePolarityContext) GetAnalyzePolarity() *AnalyzePolarity {
+	if infoCtx.analyzePolarity != nil {
+		return infoCtx.analyzePolarity
+	}
+	return &AnalyzePolarity{}
+}

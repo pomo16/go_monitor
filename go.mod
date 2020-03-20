@@ -19,5 +19,7 @@ require (
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/sirupsen/logrus v1.4.2
 	github.com/tebeka/strftime v0.1.3 // indirect
+	github.com/tidwall/gjson v1.6.0
+	github.com/yanyiwu/gojieba v1.1.2
 	gopkg.in/yaml.v2 v2.2.2
 )

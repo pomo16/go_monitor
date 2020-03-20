@@ -1,6 +1,7 @@
 package main
 
 import (
+	"gowatcher/go_monitor/algoml"
 	"gowatcher/go_monitor/service/database"
 	"gowatcher/go_monitor/service/elasticsearch"
 	"gowatcher/go_monitor/service/redis"
@@ -9,6 +10,7 @@ import (
 func Init() {
 	database.InitDB()
 	redis.InitRedis()
+	algoml.InitAlgoModel()
 	elasticsearch.InitElasticSearch()
 }
 
