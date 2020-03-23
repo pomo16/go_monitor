@@ -9,6 +9,7 @@ type CommentParams struct {
 	MainID    string
 	OffSet    int
 	Limit     int
+	Keyword   string
 }
 
 type CommentCountParams struct {
@@ -18,6 +19,8 @@ type CommentCountParams struct {
 	PolarityEnable bool
 	AIDs           []int64
 	APPIDEnable    bool
+	Keyword        string
+	KeywordEnable  bool
 }
 
 type CommentHistoParams struct {
@@ -28,15 +31,17 @@ type CommentHistoParams struct {
 }
 
 type CommentListParams struct {
-	BeginTime   int64
-	EndTime     int64
-	TimeEnable  bool
-	AIDs        []int64
-	APPIDEnable bool
-	QueryType   int16
-	MainID      string
-	OffSet      int
-	Limit       int
+	BeginTime     int64
+	EndTime       int64
+	TimeEnable    bool
+	AIDs          []int64
+	APPIDEnable   bool
+	QueryType     int16
+	MainID        string
+	OffSet        int
+	Limit         int
+	Keyword       string
+	KeywordEnable bool
 }
 
 type Comment struct {

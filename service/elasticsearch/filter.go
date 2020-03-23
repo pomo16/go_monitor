@@ -25,3 +25,8 @@ func AIDsMatcher(boolQ *elastic.BoolQuery, aIDs []int64) *elastic.BoolQuery {
 func PolarityFilter(boolQ *elastic.BoolQuery, polarity string) *elastic.BoolQuery {
 	return boolQ.Must(elastic.NewMatchQuery("polarity", polarity))
 }
+
+//KeywordMatcher 关键词匹配
+func KeywordMatcher(boolQ *elastic.BoolQuery, keyword string) *elastic.BoolQuery {
+	return boolQ.Must(elastic.NewMatchPhraseQuery("content", keyword))
+}

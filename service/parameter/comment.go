@@ -36,6 +36,11 @@ func checkAppIDSwitch(aIDs []int64) bool {
 	return len(aIDs) > 0
 }
 
+//checkKeywordSwitch 检查关键词开关
+func checkKeywordSwitch(keyword string) bool {
+	return keyword != ""
+}
+
 //checkPolaritySwitch 检查情感开关
 func checkPolaritySwitch(polarity string) bool {
 	return polarity != ""
@@ -55,6 +60,7 @@ func ParseCommentListParams(ctx context.Context, inputParams *model.InputParamet
 		MainID:    inputParams.MainID,
 		QueryType: inputParams.CommentParams.QueryType,
 		AIDs:      inputParams.AIDs,
+		Keyword:   inputParams.Keyword,
 	}
 
 	if params.QueryType == consts.IdType && params.MainID == "" {
@@ -70,6 +76,7 @@ func ParseCommentListParams(ctx context.Context, inputParams *model.InputParamet
 	params.Limit = checkLimit(params.Limit)
 	params.TimeEnable = checkTimeSwitch(params.BeginTime, params.EndTime)
 	params.APPIDEnable = checkAppIDSwitch(params.AIDs)
+	params.KeywordEnable = checkKeywordSwitch(params.Keyword)
 	return params, nil
 }
 
@@ -84,6 +91,7 @@ func ParseCommentCountParams(ctx context.Context, inputParams *model.InputParame
 		EndTime:   inputParams.EndTime,
 		Polarity:  inputParams.Polarity,
 		AIDs:      inputParams.AIDs,
+		Keyword:   inputParams.Keyword,
 	}
 
 	//时间错误
@@ -93,6 +101,7 @@ func ParseCommentCountParams(ctx context.Context, inputParams *model.InputParame
 
 	params.PolarityEnable = checkPolaritySwitch(params.Polarity)
 	params.APPIDEnable = checkAppIDSwitch(params.AIDs)
+	params.KeywordEnable = checkKeywordSwitch(params.Keyword)
 	return params, nil
 }
 

@@ -7,6 +7,7 @@ import (
 	"gowatcher/go_monitor/model"
 	"gowatcher/go_monitor/processor"
 	"gowatcher/go_monitor/processor/crawl"
+	"time"
 )
 
 //TaskList 获取任务
@@ -57,15 +58,18 @@ func packTaskList(context model.ITaskListContext) map[string]interface{} {
 			"app_id":      taskList[0].AppID,
 			"app_name":    taskList[0].AppName,
 			"status":      taskList[0].Status,
-			"create_time": taskList[0].CreateTime,
-			"modify_time": taskList[0].ModifyTime,
+			"create_time": ConvertGoTimeToStd(taskList[0].CreateTime),
+			"modify_time": ConvertGoTimeToStd(taskList[0].ModifyTime),
 		})
 	} else if inputParameter.CrawlParams.QueryType == consts.ListType {
 		for key, val := range taskList {
 			listMap[key] = map[string]interface{}{
-				"task_id":  val.ID,
-				"app_name": val.AppName,
-				"status":   val.Status,
+				"task_id":     val.ID,
+				"app_id":      val.AppID,
+				"app_name":    val.AppName,
+				"status":      val.Status,
+				"create_time": ConvertGoTimeToStd(val.CreateTime),
+				"modify_time": ConvertGoTimeToStd(val.ModifyTime),
 			}
 		}
 	}
@@ -75,4 +79,12 @@ func packTaskList(context model.ITaskListContext) map[string]interface{} {
 	}
 
 	return result
+}
+
+//ConvertGoTimeToStd 将golang的日期转换为标准日期格式，不带T那种
+func ConvertGoTimeToStd(src string) string {
+	const GoStr = "2006-01-02T15:04:05+08:00"
+	const StdStr = "2006-01-02 15:04:05"
+	t, _ := time.Parse(GoStr, src)
+	return t.Format(StdStr)
 }

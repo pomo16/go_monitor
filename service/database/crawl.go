@@ -19,7 +19,7 @@ func InsertTask(ctx context.Context, task *model.CrawlTask) error {
 //GetTaskList 获取爬虫任务列表
 func GetTaskList(ctx context.Context) ([]*model.CrawlTask, error) {
 	rows, err := database.Table("gowatcher.crawl_task_table").Debug().
-		Select("id, app_name, status").Order("id").Rows()
+		Select("id, app_name, app_id, status, create_time, modify_time").Order("id").Rows()
 
 	defer func() {
 		if r := recover(); r != nil {

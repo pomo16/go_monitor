@@ -32,6 +32,10 @@ func CommentCount(ctx context.Context, params *model.CommentCountParams) (*model
 		boolQuery = PolarityFilter(boolQuery, params.Polarity)
 	}
 
+	if params.KeywordEnable {
+		boolQuery = KeywordMatcher(boolQuery, params.Keyword)
+	}
+
 	result, err := elasticClient.Count().
 		Index(consts.ESIndex).
 		Query(boolQuery).
@@ -109,6 +113,10 @@ func CommentList(ctx context.Context, params *model.CommentListParams) ([]*model
 
 	if params.APPIDEnable {
 		boolQuery = AIDsMatcher(boolQuery, params.AIDs)
+	}
+
+	if params.KeywordEnable {
+		boolQuery = KeywordMatcher(boolQuery, params.Keyword)
 	}
 
 	result, err := elasticClient.Search().
