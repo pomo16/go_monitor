@@ -36,3 +36,12 @@ func CheckUser(ctx context.Context, params *model.LoginParams) (*model.User, err
 
 	return &res, nil
 }
+
+//InsertUser 添加用户
+func InsertUser(ctx context.Context, params *model.LoginParams) error {
+	if err := database.Table("gowatcher.user_info_table").Debug().Create(params).Error; err != nil {
+		logrus.Warnf("insert user error, err: %v", err.Error())
+		return exceptions.ErrDBHandle
+	}
+	return nil
+}

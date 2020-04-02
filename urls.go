@@ -12,7 +12,8 @@ import (
 
 //对外暴露url，不强制校验登录态
 var outlookUrls = map[string]gin.HandlerFunc{
-	"/login": user.Login,
+	"/login":    user.Login,
+	"/register": user.Register,
 }
 
 var testUrls = map[string]gin.HandlerFunc{
