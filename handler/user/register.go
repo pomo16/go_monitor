@@ -14,7 +14,7 @@ import (
 
 //Register 注册
 func Register(c *gin.Context) {
-	parameter := parameter.ParseInpuctParameter(c)
+	parameter := parameter.ParseInputParameter(c)
 	if parameter.UserName == "" || parameter.Password == "" {
 		errCode := exceptions.ErrRequestParams
 		logrus.Errorf("user %v register error: %v", parameter.UserName, errCode)
